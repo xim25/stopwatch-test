@@ -6,7 +6,8 @@ class Stopwatch extends Component {
         this.state = {
             status: false,
             currentTime: 0,
-            laps: []
+            laps: [],
+            lastLap: null
         }
         this.intervalId = null;
     }
@@ -23,18 +24,22 @@ class Stopwatch extends Component {
 
     handleStop = () => {
         let _this = this;
-        clearInterval(_this.intervalId)
+        clearInterval(_this.intervalId);
+        this.setState({lastLap: this.intervalId});
     }
 
     handleLap = () => {
-        alert("finish lap...")
+        this.setState({
+            laps: this.state.laps.concat([this.state.currentTime])
+        })
     }
 
     handleReset = () => {
         let _this = this;
         clearInterval(_this.intervalId);
         this.setState({
-            currentTime: 0
+            currentTime: 0,
+            laps: []
         })
     }
 
@@ -53,11 +58,20 @@ class Stopwatch extends Component {
     render(){
         return(
             <div>
-                <h1>{this.getMinutes()}:{this.getSeconds()}:{this.getMilliseconds()}</h1>
-                <button onClick={this.handleStart}>Start</button>
-                <button onClick={this.handleStop}>Stop</button>
-                <button onClick={this.handleLap}>Lap</button>
-                <button onClick={this.handleReset}>Reset</button>
+                <div>
+                    <h1>{this.getMinutes()}:{this.getSeconds()}:{this.getMilliseconds()}</h1>
+                    <button onClick={this.handleStart}>Start</button>
+                    <button onClick={this.handleStop}>Stop</button>
+                    <button onClick={this.handleLap}>Lap</button>
+                    <button onClick={this.handleReset}>Reset</button>
+                </div>
+                <div>
+                    <ul>
+                        {this.state.laps.map((lap, i) => 
+                            <li><b>LAP{i + 1}</b>—{lap}</li>    )
+                        }
+                    </ul>
+                </div>
             </div>
         );
     }
