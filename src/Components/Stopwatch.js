@@ -17,7 +17,8 @@ class Stopwatch extends Component {
         let _this = this;
         this.intervalId = setInterval(() => {
             _this.setState({
-                currentTime: (currentTime += 1)
+                currentTime: (currentTime += 1),
+                status: true
             });
         }, 10);
     }
@@ -25,7 +26,9 @@ class Stopwatch extends Component {
     handleStop = () => {
         let _this = this;
         clearInterval(_this.intervalId);
-        this.setState({lastLap: this.intervalId});
+        _this.setState({lastLap: this.intervalId,
+                        status: false
+        });
     }
 
     handleLap = () => {
@@ -75,10 +78,16 @@ class Stopwatch extends Component {
             <div>
                 <div>
                     <h1>{this.formattedTime()}</h1>
-                    <button onClick={this.handleStart}>Start</button>
-                    <button onClick={this.handleStop}>Stop</button>
-                    <button onClick={this.handleLap}>Lap</button>
-                    <button onClick={this.handleReset}>Reset</button>
+
+                    {(this.state.status == false
+          ? <button onClick={this.handleStart}>Start</button>
+          : <button onClick={this.handleStop}>Stop</button>
+        )}
+
+                    {(this.state.status == false
+          ? <button onClick={this.handleReset}>Reset</button>
+          : <button onClick={this.handleLap}>Lap</button>
+        )}
                 </div>
                 <div>
                     <ul>
