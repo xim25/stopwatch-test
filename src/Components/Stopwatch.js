@@ -30,7 +30,7 @@ class Stopwatch extends Component {
 
     handleLap = () => {
         this.setState({
-            laps: this.state.laps.concat([this.state.currentTime])
+            laps: this.state.laps.concat([this.formattedTime(this.state.currentTime)])
         })
     }
 
@@ -55,7 +55,7 @@ class Stopwatch extends Component {
             seconds = '0' + seconds;
           }
       
-      return minutes + ' : ' + seconds + ' . ' + milliseconds
+      return minutes + ' : ' + seconds + ' : ' + milliseconds
     }
 
     getMilliseconds() {
