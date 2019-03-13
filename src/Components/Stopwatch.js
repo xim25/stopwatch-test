@@ -4,24 +4,26 @@ class Stopwatch extends Component {
     constructor() {
         super();
         this.state = {
-            secondsElapsed: 0,
-            minutesElapsed: 0
+            status: false,
+            currentTime: 0,
+            laps: []
         }
+        this.intervalId = null;
     }
 
     handleStart = () => {
-        let {secondsElapsed} = this.state;
+        let {currentTime} = this.state;
         let _this = this;
-        this.stopwatch = setInterval(function () {
+        this.intervalId = setInterval(() => {
             _this.setState({
-                secondsElapsed: (secondsElapsed += 1)
+                currentTime: (currentTime += 1)
             });
-        }, 1000);
+        }, 10);
     }
-    
+
     handleStop = () => {
         let _this = this;
-        clearInterval(_this.stopwatch)
+        clearInterval(_this.intervalId)
     }
 
     handleLap = () => {
@@ -32,26 +34,26 @@ class Stopwatch extends Component {
         alert("restarting...")
     }
 
+    getMilliseconds() {
+        return this.state.currentTime % 100;
+    }
+
     getSeconds() {
-        
-        return ('0' + this.state.secondsElapsed % 60).slice(-2);
+        return Math.floor(this.state.currentTime / 100 % 60);
     }
 
     getMinutes() {
-        return Math.floor(this.state.secondsElapsed / 60);
-    }
-
-    getHours() {
-        return Math.floor(this.state.secondsElapsed / 60);
+        return Math.floor(this.state.currentTime/6000);
     }
 
     render(){
         return(
             <div>
-                <h1>00:00:00:00</h1>
-                <h1>{this.getMinutes()}:{this.getSeconds()}</h1>
+                <h1>{this.getMinutes()}:{this.getSeconds()}:{this.getMilliseconds()}</h1>
                 <button onClick={this.handleStart}>Start</button>
                 <button onClick={this.handleStop}>Stop</button>
+                <button onClick={this.handleLap}>Lap</button>
+                <button onClick={this.handleRestart}>Reset</button>
             </div>
         );
     }
