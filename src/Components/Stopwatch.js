@@ -30,8 +30,12 @@ class Stopwatch extends Component {
         alert("finish lap...")
     }
 
-    handleRestart = () => {
-        alert("restarting...")
+    handleReset = () => {
+        let _this = this;
+        clearInterval(_this.intervalId);
+        this.setState({
+            currentTime: 0
+        })
     }
 
     getMilliseconds() {
@@ -53,7 +57,7 @@ class Stopwatch extends Component {
                 <button onClick={this.handleStart}>Start</button>
                 <button onClick={this.handleStop}>Stop</button>
                 <button onClick={this.handleLap}>Lap</button>
-                <button onClick={this.handleRestart}>Reset</button>
+                <button onClick={this.handleReset}>Reset</button>
             </div>
         );
     }
