@@ -43,6 +43,21 @@ class Stopwatch extends Component {
         })
     }
 
+    formattedTime() {
+        let minutes = this.getMinutes().toString();
+        let seconds = this.getSeconds().toString();
+        let milliseconds = this.getMilliseconds().toString();
+
+        if(minutes.length < 2){
+            minutes = '0' + minutes;
+          }
+      if(seconds.length < 2){
+            seconds = '0' + seconds;
+          }
+      
+      return minutes + ' : ' + seconds + ' . ' + milliseconds
+    }
+
     getMilliseconds() {
         return this.state.currentTime % 100;
     }
@@ -59,7 +74,7 @@ class Stopwatch extends Component {
         return(
             <div>
                 <div>
-                    <h1>{this.getMinutes()}:{this.getSeconds()}:{this.getMilliseconds()}</h1>
+                    <h1>{this.formattedTime()}</h1>
                     <button onClick={this.handleStart}>Start</button>
                     <button onClick={this.handleStop}>Stop</button>
                     <button onClick={this.handleLap}>Lap</button>
@@ -68,7 +83,7 @@ class Stopwatch extends Component {
                 <div>
                     <ul>
                         {this.state.laps.map((lap, i) => 
-                            <li><b>LAP{i + 1}</b>—{lap}</li>    )
+                            <li><b>LAP {i + 1}</b>—{lap}</li>    )
                         }
                     </ul>
                 </div>
