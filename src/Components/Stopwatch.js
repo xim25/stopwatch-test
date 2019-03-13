@@ -67,7 +67,7 @@ class Stopwatch extends Component {
             hours = '0' + hours;
           }  
       
-      return hours + ' : ' + minutes + ' : ' + seconds + ' : ' + milliseconds
+      return hours + ' : ' + minutes + ' : ' + seconds + ' . ' + milliseconds
     }
 
     getMilliseconds() {
