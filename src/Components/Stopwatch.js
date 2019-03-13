@@ -7,8 +7,7 @@ class Stopwatch extends Component {
         this.state = {
             status: false,
             currentTime: 0,
-            laps: [],
-            lastLap: null
+            laps: []
         }
         this.intervalId = null;
     }
