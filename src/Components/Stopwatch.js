@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../Stopwatch.css';
 
 class Stopwatch extends Component {
     constructor() {
@@ -50,15 +51,24 @@ class Stopwatch extends Component {
         let minutes = this.getMinutes().toString();
         let seconds = this.getSeconds().toString();
         let milliseconds = this.getMilliseconds().toString();
+        let hours = this.getHour().toString();
 
         if(minutes.length < 2){
             minutes = '0' + minutes;
           }
-      if(seconds.length < 2){
+        if(seconds.length < 2){
             seconds = '0' + seconds;
           }
+
+        if(milliseconds.length < 2){
+            milliseconds = '0' + milliseconds;
+          }
+          
+        if(hours.length < 2){
+            hours = '0' + hours;
+          }  
       
-      return minutes + ' : ' + seconds + ' : ' + milliseconds
+      return hours + ' : ' + minutes + ' : ' + seconds + ' : ' + milliseconds
     }
 
     getMilliseconds() {
@@ -70,29 +80,34 @@ class Stopwatch extends Component {
     }
 
     getMinutes() {
-        return Math.floor(this.state.currentTime/6000);
+        return Math.floor(this.state.currentTime / 6000);
+    }
+
+    getHour() {
+        return Math.floor(this.state.currentTime / 360000);
     }
 
     render(){
         return(
-            <div>
-                <div>
-                    <h1>{this.formattedTime()}</h1>
+            <div className="wraper">
+                <div className="timer">
+                    <h1>Stopwatch</h1>
+                    <p>{this.formattedTime()}</p>
 
-                    {(this.state.status == false
-          ? <button onClick={this.handleStart}>Start</button>
-          : <button onClick={this.handleStop}>Stop</button>
+                    {(this.state.status === false
+          ? <button className="button start" onClick={this.handleStart}>START</button>
+          : <button className="button stop" onClick={this.handleStop}>STOP</button>
         )}
 
-                    {(this.state.status == false
-          ? <button onClick={this.handleReset}>Reset</button>
-          : <button onClick={this.handleLap}>Lap</button>
+                    {(this.state.status === false
+          ? <button className="button reset" onClick={this.handleReset}>RESET</button>
+          : <button className="button lap"onClick={this.handleLap}>LAP</button>
         )}
                 </div>
-                <div>
+                <div className="list">
                     <ul>
                         {this.state.laps.map((lap, i) => 
-                            <li><b>LAP {i + 1}</b>—{lap}</li>    )
+                            <li><b>LAP {i + 1}</b> — {lap}</li>)
                         }
                     </ul>
                 </div>
